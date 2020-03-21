@@ -1,0 +1,74 @@
+Alpine version of any image is the smallest possible image of that sort with very bare minimum features/programs
+docker --version
+docker images (Gets all the images in the system)
+docker ps (Lists the running containers)
+docker ps -all( Lists all the containers)
+docker build -t my-apache2 . (-t is to give the tag name or the image name and '.' represents the pwd)
+To tag a docker image-name format: myDockerId/name:version (if nothing mentioned for version it takes as latest)
+docker stop 'container-id'
+docker rm 'container-id'
+docker run -dit -p 7000:80 --name 'container-name' 'image-name'
+docker exec -it 'running-container-name' bash (To open a bash terminal for interaction with the container)
+  -it allows us to execute a command against a running container and get the control of the new process
+    which we executed against the running container
+docker inspect 'docker-container-name'
+docker run --name lmp-mysql -p 3300:3306 -e MYSQL_ROOT_PASSWORD=password -e MYSQL_DATABASE=licensing -d mysql:latest
+docker rm $(docker ps -a -q) //removes all container
+docker rmi $(docker images -q) //removes all images
+docker commit 'container-id' 'imagename:tag'
+docker run --name mysql -e MYSQL_ROOT_PASSWORD=password -e MYSQL_DATABASE=quiz -d mysql:5.6
+docker start -a container-id (-a is for outputting the output on to the console of the terminal)
+docker system prune (deletes all the containers and unused network and dangling images and cache images)
+docker log container-id(To get the logs of the container this can be stopped container as well)
+docker stop container-id (gracefully with time to clean up if takes more than 10 seconds then falls back to kill)
+docker kill container-id (immediate with no time to clean up)
+workdir path-inside -the-container (This should be mentioned in the DockerFile, all subsequent operation will be relative to this path)
+docker-compose build
+docker-compose up -d
+
+To link 2 containers
+docker run -p 8080:8080 --name lmpservice --link mysql:mysql -d lmp-service
+
+Login push an image to a remote docker
+
+docker login -u userName -p password url
+docker commit a7e9f4d9bf44 containerid/name
+docker tag lmp/v2/lmpservice tagname
+docker push tagname
+
+Docker Network
+
+docker network create lmp-net
+docker run ... --network=lmp-net --network-alias=lmp-database
+docker run ... --network=lmp-net --network-alias=lmp-services
+docker run ... --network=lmp-net --network-alias=lmp-ui
+
+
+-d meaning detached process backend process
+-it meaning interactive terminal
+-e is environment variable
+-p port host:dockercontainer
+--name to give container a name
+ctrl+q (to get out of a running container in docker without stoping it)
+
+To get vim editor
+once you enter the running container enter the following command
+apt-get update
+apt-get install vim
+
+
+netstat -ano | findstr :8080
+taskkill /PID 3708 /F
+
+ npm run build
+
+ startNetworkServer -h 0.0.0.0
+
+ password 5432
+
+ docker-compose down --rmi all
+
+ Interact with Database
+ 1. docker exec -it docker-mysql bash
+ 2. mysql -uroot -p
+ 3. enter the password
